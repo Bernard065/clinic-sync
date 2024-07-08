@@ -1,7 +1,7 @@
 import { FormFieldType } from '@/lib/utils';
 import { Control } from 'react-hook-form';
 
-export interface CustomProps {
+declare interface CustomProps {
   control: Control<any>,
   fieldType: FormFieldType,
   name: string,
@@ -16,8 +16,14 @@ export interface CustomProps {
   renderSkeleton?: (field: any) => React.ReactNode,
 }
 
-export interface ButtonProps {
+declare interface ButtonProps {
   isLoading: boolean,
   className?: string,
   children: React.ReactNode,
+}
+
+declare interface CreateUserParams {
+  name: string;
+  email: string;
+  phone: string;
 }
