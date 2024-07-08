@@ -10,6 +10,7 @@ import { FormFieldType } from "@/lib/utils"
 import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import { UserFormValidation } from "@/lib/validation"
+import { useRouter } from "next/navigation"
 
 
 
@@ -17,6 +18,9 @@ import { UserFormValidation } from "@/lib/validation"
 
 const PatientForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
     // Define form
     const form = useForm<z.infer<typeof UserFormValidation>>({
         resolver: zodResolver(UserFormValidation),
@@ -28,10 +32,25 @@ const PatientForm = () => {
     })
 
     // Define a submit handler
-    function onSubmit(values: z.infer<typeof UserFormValidation>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
+      setIsLoading(true)
+      
+      try {
+        // User data that we get from the form
+        // const userData = {
+        //   name,
+        //   email,
+        //   phone,
+        // }
+
+        // const user = await createUser(userData)
+
+        // if(user) router.push(`/patients/${user.$id}/register`)
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
     }
   return (
     <Form {...form}>
