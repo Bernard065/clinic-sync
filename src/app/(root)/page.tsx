@@ -14,10 +14,10 @@ const Home = () => {
             height={1000}
             width={1000}
             alt='logo'
-            className='mb-12 h-10 w-fit'
+            className='mb-10 h-10 w-fit'
           />
           <PatientForm />
-          <div className='flex justify-between mt-20 text-14-regular'>
+          <div className='flex justify-between mt-10 text-14-regular'>
             <p className='justify-items-end text-dark-600 xl:text-left'>
               &copy; ClinicSync
             </p>

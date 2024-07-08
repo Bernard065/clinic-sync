@@ -37,11 +37,35 @@
   .side-img {
     @apply hidden h-full object-cover md:block
   }
+  .header {
+    @apply text-32-bold md:text-36-bold
+  }
 
 
   /* TYPOGRAPHY */
   .text-14-regular {
     @apply text-[14px] leading-[18px] font-normal
+  }
+  .text-32-bold {
+    @apply text-[32px] leading-[36px] font-bold
+  }
+  .text-36-bold {
+    @apply text-[36px] leading-[40px] font-bold
+  }
+
+
+  /* REACT FORM  */
+  .error {
+    @apply text-red-400 !important;
+  }
+  .input {
+    @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important
+  }
+  .input-phone {
+    @apply mt-2 h-11 rounded-md px-3 text-sm border bg-dark-400 placeholder:text-dark-600 border-dark-500 !important;
+  }
+  .primary-btn {
+    @apply bg-green-500 text-white !important
   }
 
 }
