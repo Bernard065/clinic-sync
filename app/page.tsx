@@ -4,8 +4,7 @@ import Link from "next/link";
 import { PatientForm } from "@/components/forms/PatientForm";
 
 
-const Home = ({ searchParams }: SearchParamProps) => {
-  const isAdmin = searchParams?.admin === "true";
+const Home = () => {
 
   return (
     <div className="flex h-screen max-h-screen">

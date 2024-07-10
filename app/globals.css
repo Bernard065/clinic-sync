@@ -49,11 +49,11 @@
   }
 
   .header {
-    @apply text-32-bold md:text-36-bold;
+    @apply text-18-bold md:text-24-bold;
   }
 
   .sub-header {
-    @apply text-18-bold md:text-24-bold;
+    @apply text-16-bold md:text-18-bold;
   }
 
   .container {
@@ -159,6 +159,10 @@
 
   .text-16-semibold {
     @apply text-[16px] leading-[20px] font-semibold;
+  }
+
+  .text-16-bold {
+    @apply text-[16px] leading-[20px] font-bold;
   }
 
   .text-16-regular {

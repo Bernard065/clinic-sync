@@ -14,3 +14,5 @@ export enum FormFieldType {
   SELECT = "select",
   SKELETON = "skeleton",
 }
+
+export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));

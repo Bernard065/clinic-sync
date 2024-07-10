@@ -1,3 +1,4 @@
+import { decl } from "postcss";
 
 declare interface CreateUserParams {
   name: string;
@@ -20,4 +21,12 @@ declare interface CustomProps {
   fieldType: FormFieldType;
 }
 
+declare type SearchParamProps = {
+  params: { [key: string]: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+declare interface User extends CreateUserParams {
+  $id: string
+}
 
