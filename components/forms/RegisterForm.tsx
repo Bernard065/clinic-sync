@@ -14,8 +14,10 @@ import CustomFormField from "../CustomFormField";
 import { FormFieldType } from "@/lib/utils";
 import { User } from "@/types";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { GenderOptions } from "@/constants";
+import { Doctors, GenderOptions } from "@/constants";
 import { Label } from "../ui/label";
+import { SelectItem } from "../ui/select";
+import Image from "next/image";
 
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
@@ -107,15 +109,15 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="gender"
               label="Gender"
-              renderSkeleton={(field) => (
+              renderSkeleton={(field: any) => (
                 <FormControl>
                   <RadioGroup
                     className="flex h-11 gap-6 xl:justify-between"
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    {GenderOptions.map((option, i) => (
-                      <div key={option + i} className="radio-group">
+                    {GenderOptions.map((option) => (
+                      <div key={option} className="radio-group">
                         <RadioGroupItem value={option} id={option} />
                         <Label htmlFor={option} className="cursor-pointer">
                           {option}
@@ -130,19 +132,123 @@ const RegisterForm = ({ user }: { user: User }) => {
         <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
                 control={form.control} 
-                fieldType={FormFieldType.DATE_PICKER}
-                name='birthDate'
-                label='Date of Birth'
+                fieldType={FormFieldType.INPUT}
+                name='address'
+                label='Address'
+                placeholder='Enter your address'
+                
+            />
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.INPUT}
+                name='occupation'
+                label='Occupation'
+                placeholder='Enter your occupation'
+              
+            />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.INPUT}
+                name='emergencyContactName'
+                label='Emergency Contact Name'
+                placeholder='Name of next of kin'
                 
             />
             <CustomFormField
                 control={form.control} 
                 fieldType={FormFieldType.PHONE_INPUT}
-                name='phone'
-                label='Phone Number'
-                placeholder='+254715012201'
-                iconSrc='/assets/icons/email.svg'
-                iconAlt='phone'
+                name='emergencyContactNumber'
+                label='Emergency Contact Number '
+                placeholder='Number of next of kin'
+              
+            />
+        </div>
+
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Medical Information</h2>
+          </div>
+        </section>
+        <CustomFormField
+          control={form.control} 
+          fieldType={FormFieldType.SELECT}
+          name='primaryPhysician'
+          label='Primary Physician'
+          placeholder='Select a physician'
+              
+        >
+          {Doctors.map((doctor) => (
+            <SelectItem key={doctor.name} value={doctor.name}>
+              <div className="flex cursor-pointer items-center gap-2">
+                <Image 
+                  src={doctor.image}
+                  width={32}
+                  height={32}
+                  alt={doctor.name}
+                  className="rounded-full border border-dark-500"
+                />
+                <p>{doctor.name}</p>
+              </div>
+            </SelectItem>
+          ))}
+        </CustomFormField>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.INPUT}
+                name='insuranceProvider'
+                label='Insurance Provider'
+                placeholder='Enter your insurance provider'
+                
+            />
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.INPUT}
+                name='insurancePolicyNumber'
+                label='Insurance Policy Number '
+                placeholder='Enter your insurance policy number'
+              
+            />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.TEXTAREA}
+                name='allergies'
+                label='Allergies (if any)'
+                placeholder='Enter any allergies you have'
+                
+            />
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.TEXTAREA}
+                name='currentMedication'
+                label='Current Medication (if any) '
+                placeholder='Enter any medication you are currently under'
+              
+            />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.TEXTAREA}
+                name='familyMedicalHistory'
+                label='Family Medical History (if any)'
+                placeholder='Enter current family medical history'
+                
+            />
+            <CustomFormField
+                control={form.control} 
+                fieldType={FormFieldType.TEXTAREA}
+                name='pastMedicalHistory'
+                label='Past Medical History (if any) '
+                placeholder='Enter past family medical history'
+              
             />
         </div>
 
