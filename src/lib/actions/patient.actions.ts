@@ -10,7 +10,9 @@ export const createUser =async (user: CreateUserParams) => {
             user.phone,
             undefined,
             user.name
-        )
+        );
+
+        return newUser;
         
     } catch (error: any) {
         if(error && error.code === 409) {
@@ -18,7 +20,7 @@ export const createUser =async (user: CreateUserParams) => {
                 Query.equal('email', [user.email])
             ])
 
-            return documents?.users[0]
+            return documents?.users[0];
         }
         
     }

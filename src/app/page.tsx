@@ -8,18 +8,18 @@ const Home = () => {
     <div className='flex h-screen max-h-screen'>
       {/* PassKey Modal */}
       <section className='remove-scrollbar container my-auto'>
-        <div className='subcontainer max-w-[496px]'>
+        <div className='sub-container max-w-[496px]'>
           <Image 
             src='/assets/icons/logo-full.svg'
             height={1000}
             width={1000}
             alt='logo'
-            className='mb-10 h-10 w-fit'
+            className='mb-10 h-8 w-fit'
           />
           <PatientForm />
           <div className='flex justify-between mt-10 text-14-regular'>
             <p className='justify-items-end text-dark-600 xl:text-left'>
-              &copy; ClinicSync
+              &copy; 2024 ClinicSync 
             </p>
             <Link href='/?admin=true' className='text-green-500'>Admin</Link>
           </div>

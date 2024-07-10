@@ -7,7 +7,7 @@ import {
     FormLabel,
     FormMessage,
   } from "@/components/ui/form"
-  import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input"
 import { CustomProps } from '@/types'
 import { FormFieldType } from '@/lib/utils'
 import RenderField from './RenderField'

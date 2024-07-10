@@ -22,22 +22,22 @@ const PatientForm = () => {
 
   const router = useRouter();
 
-    // Define form
-    const form = useForm<z.infer<typeof UserFormValidation>>({
-        resolver: zodResolver(UserFormValidation),
-        defaultValues: {
-          name: "",
-          email: "",
-          phone: ""
-        },
-    })
+  // Define form
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: ""
+    },
+  })
 
-    // Define a submit handler
-    async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
-      setIsLoading(true)
+   // Define a submit handler
+  async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
+    //setIsLoading(true)
       
-      try {
-        // User data that we get from the form
+    try {
+      // User data that we get from the form
         const userData = {
           name,
           email,
@@ -45,6 +45,8 @@ const PatientForm = () => {
         }
 
         const user = await createUser(userData)
+
+        console.log(user)
 
         if(user) router.push(`/patients/${user.$id}/register`)
         
