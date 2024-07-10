@@ -1,6 +1,5 @@
 import React from 'react'
 import { Input } from './ui/input'
-import { CustomProps } from '@/types';
 import { FormFieldType } from '@/lib/utils';
 import Image from 'next/image';
 import { FormControl } from './ui/form';

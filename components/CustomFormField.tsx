@@ -8,13 +8,13 @@ import {
     FormMessage,
   } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { CustomProps } from '@/types'
 import { FormFieldType } from '@/lib/utils'
 import RenderField from './RenderField'
 
 
 
-const CustomForm = (props: CustomProps) => {
+
+const CustomFormField = (props: CustomProps) => {
   const { control, fieldType, name, label } = props
   return (
     <FormField
@@ -37,4 +37,4 @@ const CustomForm = (props: CustomProps) => {
   )
 }
 
-export default CustomForm
+export default CustomFormField
