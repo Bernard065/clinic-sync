@@ -14,10 +14,11 @@ import CustomFormField from "../CustomFormField";
 import { FormFieldType } from "@/lib/utils";
 import { User } from "@/types";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions } from "@/constants";
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
+import FileUploader from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
@@ -252,9 +253,78 @@ const RegisterForm = ({ user }: { user: User }) => {
             />
         </div>
 
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identification and Verfication</h2>
+          </div>
+        </section>
+        <CustomFormField
+          control={form.control} 
+          fieldType={FormFieldType.SELECT}
+          name='identificationType'
+          label='Identification Type'
+          placeholder='Select an identification type'
+              
+        >
+          {IdentificationTypes.map((identificationType) => (
+            <SelectItem key={identificationType} value={identificationType}>
+            {identificationType}
+            </SelectItem>
+          ))}
+        </CustomFormField>
+
+        <CustomFormField
+          control={form.control} 
+          fieldType={FormFieldType.INPUT}
+          name='identificationNumber'
+          label='Identification Number '
+          placeholder='Enter your identification number'
+              
+        />
+        <CustomFormField 
+          control={form.control} 
+          fieldType={FormFieldType.SKELETON}
+          name='identificationDocumentId'
+          label='Scanned Copy of Identification Document '
+          renderSkeleton={(field: any) => (
+            <FormControl>
+              <FileUploader files={field.value} onChange={field.onChange} />
+            </FormControl>
+          )}
+        />
+
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consent and Privacy</h2>
+            </div>
+        </section>
+
+        <CustomFormField
+          control={form.control} 
+          fieldType={FormFieldType.CHECKBOX}
+          name='privacyConsent'
+          label='I consent to privacy policy '
+              
+        />
+         <CustomFormField
+          control={form.control} 
+          fieldType={FormFieldType.CHECKBOX}
+          name='treatmentConsent'
+          label='I consent to treatment '
+              
+        />
+         <CustomFormField
+          control={form.control} 
+          fieldType={FormFieldType.CHECKBOX}
+          name='disclosureConsent'
+          label='I consent to disclosure of information '
+              
+        />
         
 
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        
+
+        <SubmitButton isLoading={isLoading}>Submit and Continue</SubmitButton>
       </form>
     </Form>
   )

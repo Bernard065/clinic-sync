@@ -30,3 +30,7 @@ declare interface User extends CreateUserParams {
   $id: string
 }
 
+declare interface FileUploaderProps {
+  files: File[] | undefined;
+  onChange: (files: File[]) => void;
+};
