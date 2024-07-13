@@ -119,7 +119,9 @@ export const registerPatient = async ({
         identificationDocumentUrl: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
         ...patient
       }
-    )
+    );
+
+    return parseStringify(newPatient);
     
   } catch (error) {
     console.log(error)
