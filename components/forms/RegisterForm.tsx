@@ -6,15 +6,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
-import { createUser } from "@/lib/actions/patient.actions";
-import { UserFormValidation } from "@/lib/validation";
+import { createUser, registerPatient } from "@/lib/actions/patient.actions";
+import { PatientFormValidation, UserFormValidation } from "@/lib/validation";
 import "react-phone-number-input/style.css";
 import SubmitButton from "../SubmitButton";
 import CustomFormField from "../CustomFormField";
 import { FormFieldType } from "@/lib/utils";
 import { User } from "@/types";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
+import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
@@ -24,35 +24,72 @@ const RegisterForm = ({ user }: { user: User }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
-    const form = useForm<z.infer<typeof UserFormValidation>>({
-        resolver: zodResolver(UserFormValidation),
+    const form = useForm<z.infer<typeof PatientFormValidation>>({
+        resolver: zodResolver(PatientFormValidation),
         defaultValues: {
+          ...PatientFormDefaultValues,
           name: "",
           email: "",
           phone: "",
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof UserFormValidation>) => {
-        setIsLoading(true);
-    
-        try {
-          const user = {
-            name: values.name,
-            email: values.email,
-            phone: values.phone,
-          };
-    
-          const newUser = await createUser(user);
-    
-          if (newUser) {
-            router.push(`/patients/${newUser.$id}/register`);
-          }
-        } catch (error) {
-          console.log(error);
+    const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+      setIsLoading(true);
+  
+      // Store file info in form data as
+      let formData;
+      if (
+        values.identificationDocument &&
+        values.identificationDocument?.length > 0
+      ) {
+        const blobFile = new Blob([values.identificationDocument[0]], {
+          type: values.identificationDocument[0].type,
+        });
+  
+        formData = new FormData();
+        formData.append("blobFile", blobFile);
+        formData.append("fileName", values.identificationDocument[0].name);
+      }
+  
+      try {
+        const patient = {
+          userId: user.$id,
+          name: values.name,
+          email: values.email,
+          phone: values.phone,
+          birthDate: new Date(values.birthDate),
+          gender: values.gender,
+          address: values.address,
+          occupation: values.occupation,
+          emergencyContactName: values.emergencyContactName,
+          emergencyContactNumber: values.emergencyContactNumber,
+          primaryPhysician: values.primaryPhysician,
+          insuranceProvider: values.insuranceProvider,
+          insurancePolicyNumber: values.insurancePolicyNumber,
+          allergies: values.allergies,
+          currentMedication: values.currentMedication,
+          familyMedicalHistory: values.familyMedicalHistory,
+          pastMedicalHistory: values.pastMedicalHistory,
+          identificationType: values.identificationType,
+          identificationNumber: values.identificationNumber,
+          identificationDocument: values.identificationDocument
+            ? formData
+            : undefined,
+          privacyConsent: values.privacyConsent,
+        };
+        
+        // @ts-ignore
+        const newPatient = await registerPatient(patient);
+        // @ts-ignore
+        if (newPatient) {
+          router.push(`/patients/${user.$id}/new-appointment`);
         }
-    
-        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+  
+      setIsLoading(false);
     };
     
   return (
@@ -284,7 +321,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         <CustomFormField 
           control={form.control} 
           fieldType={FormFieldType.SKELETON}
-          name='identificationDocumentId'
+          name='identificationDocument'
           label='Scanned Copy of Identification Document '
           renderSkeleton={(field: any) => (
             <FormControl>
