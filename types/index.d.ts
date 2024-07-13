@@ -36,7 +36,7 @@ declare interface FileUploaderProps {
 };
 
 
-declare type Gender = "Male" | "Female";
+declare type Gender = "male" | "female";
 
 declare type Status = "pending" | "scheduled" | "cancelled";
 
