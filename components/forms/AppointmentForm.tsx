@@ -14,6 +14,7 @@ import { Doctors } from '@/constants';
 import { SelectItem } from '../ui/select';
 import Image from 'next/image';
 import { Status } from '@/types';
+import { createAppointment } from '@/lib/actions/appointment.actions';
 
 const AppointmentForm = ({ type, userId, patientId }: {
   userId: string;
@@ -61,11 +62,22 @@ const AppointmentForm = ({ type, userId, patientId }: {
           patient: patientId,
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
-          reason: values.reason,
+          reason: values.reason!,
           note: values.note,
           status: status as Status,
         }
+        
+        const appointment = await createAppointment(appointmentData);
+
+        if (appointment) {
+          form.reset();
+          router.push(
+            `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
+          );
+        }
       }
+
+      
     } catch (error) {
       console.log(error);
     }
