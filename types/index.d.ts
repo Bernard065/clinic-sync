@@ -70,3 +70,10 @@ declare type CreateAppointmentParams = {
   status: Status;
   note: string | undefined;
 };
+
+declare type StatCardProps = {
+  type: "appointments" | "pending" | "cancelled";
+  count: number;
+  label: string;
+  icon: string;
+};
