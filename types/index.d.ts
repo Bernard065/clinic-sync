@@ -1,4 +1,5 @@
 import { decl } from "postcss";
+import { Appointment } from "@/types/appwrite.types";
 
 declare interface CreateUserParams {
   name: string;
@@ -77,3 +78,19 @@ declare type StatCardProps = {
   label: string;
   icon: string;
 };
+
+declare interface AppointmentModalProps {
+  patientId: string;
+  userId: string;
+  appointment?: Appointment;
+  type: "schedule" | "cancel" | "create" ;
+  title: string;
+  description: string;
+}
+
+declare interface UpdateAppointmentParams {
+  appointmentId: string;
+  userId: string;
+  appointment: Appointment;
+  type: string;
+}

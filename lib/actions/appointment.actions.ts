@@ -4,8 +4,9 @@ import { InputFile } from "node-appwrite/file";
 import { APPOINTMENT_COLLECTION_ID, BUCKET_ID, DATABASE_ID, ENDPOINT, PATIENT_COLLECTION_ID, PROJECT_ID, databases, storage } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { ID, Query } from "node-appwrite";
-import { CreateAppointmentParams } from "@/types";
+import { CreateAppointmentParams, UpdateAppointmentParams } from "@/types";
 import { Appointment } from "@/types/appwrite.types";
+import { revalidatePath } from "next/cache";
 
 
 //Create Appointment
@@ -84,6 +85,33 @@ export const getRecentAppointments =async () => {
         
     } catch (error) {
         console.log(error);
+        
+    }
+}
+
+export const updateAppointment =async ({ 
+    appointmentId, 
+    userId, 
+    appointment, 
+    type, 
+}: UpdateAppointmentParams) => {
+    try {
+        const updatedAppointment = await databases.updateDocument(
+            DATABASE_ID!,
+            APPOINTMENT_COLLECTION_ID!,
+            appointmentId,
+            appointment
+        );
+
+        if (!updatedAppointment) throw Error;
+
+        // SMS Notification
+
+        revalidatePath("/admin");
+        return parseStringify(updatedAppointment)
+
+    } catch (error) {
+        console.error("An error occured while scheduling an appointment:", error);
         
     }
 }
