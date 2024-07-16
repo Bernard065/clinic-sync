@@ -32,10 +32,13 @@ const AppointmentForm = ({ type, userId, patientId, appointment, setOpen }: {
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      primaryPhysician: "",
-      schedule: new Date(),
-      reason: "",
-      cancellationReason: "",
+      primaryPhysician: appointment ? appointment?.primaryPhysician : "",
+      schedule: appointment
+        ? new Date(appointment?.schedule!)
+        : new Date(),
+      reason: appointment ? appointment.reason : "",
+      note: appointment?.note || "",
+      cancellationReason: appointment?.cancellationReason || "",
     },
   });
 
@@ -77,11 +80,12 @@ const AppointmentForm = ({ type, userId, patientId, appointment, setOpen }: {
           router.push(
             `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
           );
-        } else {
+        } else if (appointment?.$id) {
           const appointmentToUpdate = {
             userId,
             appointmentId: appointment?.$id!,
             appointment: {
+              ...appointment,
               primaryPhysician: values.primaryPhysician,
               schedule: new Date(values.schedule),
               status: status as Status,

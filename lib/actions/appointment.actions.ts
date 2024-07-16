@@ -89,29 +89,28 @@ export const getRecentAppointments =async () => {
     }
 }
 
-export const updateAppointment =async ({ 
-    appointmentId, 
-    userId, 
-    appointment, 
-    type, 
-}: UpdateAppointmentParams) => {
+export const updateAppointment = async ({
+    appointmentId,
+    userId,
+    appointment,
+    type,
+  }: UpdateAppointmentParams) => {
     try {
-        const updatedAppointment = await databases.updateDocument(
-            DATABASE_ID!,
-            APPOINTMENT_COLLECTION_ID!,
-            appointmentId,
-            appointment
-        );
-
-        if (!updatedAppointment) throw Error;
-
-        // SMS Notification
-
-        revalidatePath("/admin");
-        return parseStringify(updatedAppointment)
-
+      // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
+      const updatedAppointment = await databases.updateDocument(
+        DATABASE_ID!,
+        APPOINTMENT_COLLECTION_ID!,
+        appointmentId,
+        appointment
+      );
+  
+      if (!updatedAppointment) throw Error;
+  
+      
+  
+      revalidatePath("/admin");
+      return parseStringify(updatedAppointment);
     } catch (error) {
-        console.error("An error occured while scheduling an appointment:", error);
-        
+      console.error("An error occurred while scheduling an appointment:", error);
     }
-}
+  };

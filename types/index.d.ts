@@ -88,7 +88,7 @@ declare interface AppointmentModalProps {
   description: string;
 }
 
-declare interface UpdateAppointmentParams {
+declare type UpdateAppointmentParams = {
   appointmentId: string;
   userId: string;
   appointment: Appointment;
